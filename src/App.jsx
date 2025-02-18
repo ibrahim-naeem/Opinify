@@ -1,7 +1,7 @@
 function App() {
   return (
     <>
-      <p>Opinify.com</p>
+      <p className="text-9xl ">Opinify.com</p>
     </>
   );
 }
