@@ -17,11 +17,10 @@ const MainLayout = () => (
 
 const router = createBrowserRouter([
   {
-    path: "/",
     element: <MainLayout />,
     children: [
       {
-        path: "email",
+        path: "/",
         element: <App />,
       },
       {
