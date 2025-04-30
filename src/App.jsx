@@ -1,34 +1,32 @@
-import { useState, useEffect } from "react";
-import { Player } from "@lottiefiles/react-lottie-player";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { MainContextProvider } from "./Context/MainContext.jsx";
 
-import EmailSection from "./Components/EmailSection";
+import MainLayout from "./Components/MainLayout.jsx";
+import Email from "./Pages/Email.jsx";
+import Review from "./Pages/Review.jsx";
 
-import Animation from "./assets/Animation - 1740910205152.json";
+const router = createBrowserRouter([
+  {
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Email />,
+      },
+      {
+        path: "review",
+        element: <Review />,
+      },
+    ],
+  },
+]);
 
 function App() {
-  const [emailLottie, setEmailLottie] = useState(false);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      emailLottie && setEmailLottie(false);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, [emailLottie]);
-
-  if (emailLottie) {
-    return (
-      <Player
-        autoplay
-        loop
-        src={Animation}
-        style={{ height: "100vh", width: "100vw" }}
-      />
-    );
-  }
-
   return (
     <>
-      <EmailSection setEmailLottie={setEmailLottie} />
+      <MainContextProvider>
+        <RouterProvider router={router} />
+      </MainContextProvider>
     </>
   );
 }
