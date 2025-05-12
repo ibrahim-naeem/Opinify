@@ -2,9 +2,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Camera } from "lucide-react";
 
-import { db, storage } from "../firebase";
-import { addDoc, collection } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+// import { db, storage } from "../firebase";
+// import { addDoc, collection } from "firebase/firestore";
+// import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 function AddReviewForm() {
   const [images, setImages] = useState([]);
@@ -17,21 +17,19 @@ function AddReviewForm() {
 
   const handleFormData = async () => {
     try {
-      const imageURls = [];
-
-      for (const img of images) {
-        const imageRef = await ref(
-          storage,
-          `reviewImages/${Date.now()}-${img.name}`
-        );
-        await uploadBytes(imageRef, img);
-        const downloadUrl = await getDownloadURL(imageRef);
-        imageURls.push(downloadUrl);
-      }
-
-      const dataWithImages = { ...formData, images: imageURls };
-      const docRef = await addDoc(collection(db, "reviews"), dataWithImages);
-      console.log("Document ID:", docRef.id);
+      // const imageURls = [];
+      // for (const img of images) {
+      //   const imageRef = await ref(
+      //     storage,
+      //     `reviewImages/${Date.now()}-${img.name}`
+      //   );
+      //   await uploadBytes(imageRef, img);
+      //   const downloadUrl = await getDownloadURL(imageRef);
+      //   imageURls.push(downloadUrl);
+      // }
+      // const dataWithImages = { ...formData, images: imageURls };
+      // const docRef = await addDoc(collection(db, "reviews"), dataWithImages);
+      // console.log("Document ID:", docRef.id);
     } catch (error) {
       console.log("Error:", error);
     }
