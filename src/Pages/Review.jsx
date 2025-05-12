@@ -3,6 +3,7 @@ import { useContext } from "react";
 import Toggle from "../Components/Toggle";
 import { MainContext } from "../Context/MainContext";
 import AddReviewForm from "../Components/AddReviewForm";
+import ReviewsList from "../Components/ReviewsList";
 
 function Review() {
   const { toggle } = useContext(MainContext);
@@ -10,7 +11,7 @@ function Review() {
   return (
     <div className="flex flex-col items-center py-10">
       <Toggle />
-      {toggle === "add" ? <AddReviewForm /> : <h1>Recent Reviews</h1>}
+      {toggle === "add" ? <AddReviewForm /> : <ReviewsList />}
     </div>
   );
 }
