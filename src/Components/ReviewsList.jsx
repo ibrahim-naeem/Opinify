@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-const Data = () => {
+import { useNavigate } from "react-router";
+const Data = ({ navigate }) => {
   return (
     <div className=" w-[80%] mb-4 flex gap-10 rounded-2xl shadow-2xl overflow-clip">
       <img
@@ -19,7 +20,10 @@ const Data = () => {
           veritatis dolorum eum eveniet modi, unde amet suscipit ipsam
           voluptatum aut, corrupti laudantium officia!
         </p>
-        <button className="mx-auto w-80 p-4 border rounded-4xl border-heading text-heading">
+        <button
+          className="mx-auto w-80 p-4 border rounded-4xl border-heading text-heading"
+          onClick={() => navigate(`/reviewDetails/${1234}`)}
+        >
           Read Me..
         </button>
       </div>
@@ -28,6 +32,7 @@ const Data = () => {
 };
 
 function ReviewsList() {
+  const navigate = useNavigate();
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -38,7 +43,7 @@ function ReviewsList() {
       <h2 className="text-2xl py-6 font-bold text-center text-heading">
         Reviews
       </h2>
-      <Data />
+      <Data navigate={navigate} />
       <Data />
       <Data />
       <Data />
