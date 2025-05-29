@@ -8,7 +8,7 @@ function Header() {
         <h1
           style={{ color: COLORS.text }}
           className={`text-4xl font-extrabold font-comfortaa px-4`}
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/review")}
         >
           Opinify
         </h1>

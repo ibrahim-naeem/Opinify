@@ -4,6 +4,7 @@ import { MainContextProvider } from "./Context/MainContext.jsx";
 import MainLayout from "./Components/MainLayout.jsx";
 import Email from "./Pages/Email.jsx";
 import Review from "./Pages/Review.jsx";
+import ReviewDetailView from "./Components/ReviewDetailView.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         path: "review",
         element: <Review />,
+      },
+      {
+        path: "reviewDetails/:id",
+        element: <ReviewDetailView />,
       },
     ],
   },
