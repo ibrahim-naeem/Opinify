@@ -6,6 +6,7 @@ export const MainContext = createContext();
 export const MainContextProvider = ({ children }) => {
   const [emailLottie, setEmailLottie] = useState(false);
   const [toggle, setToggle] = useState("recent"); // recent - add
+
   return (
     <MainContext.Provider
       value={{ emailLottie, setEmailLottie, toggle, setToggle }}

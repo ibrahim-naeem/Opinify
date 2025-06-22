@@ -2,10 +2,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Camera } from "lucide-react";
 
-// import { db, storage } from "../firebase";
-// import { addDoc, collection } from "firebase/firestore";
-// import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-
 function AddReviewForm() {
   const [images, setImages] = useState([]);
   const [formData, setFormData] = useState({
@@ -17,19 +13,7 @@ function AddReviewForm() {
 
   const handleFormData = async () => {
     try {
-      // const imageURls = [];
-      // for (const img of images) {
-      //   const imageRef = await ref(
-      //     storage,
-      //     `reviewImages/${Date.now()}-${img.name}`
-      //   );
-      //   await uploadBytes(imageRef, img);
-      //   const downloadUrl = await getDownloadURL(imageRef);
-      //   imageURls.push(downloadUrl);
-      // }
-      // const dataWithImages = { ...formData, images: imageURls };
-      // const docRef = await addDoc(collection(db, "reviews"), dataWithImages);
-      // console.log("Document ID:", docRef.id);
+      console.log("state-data:", formData);
     } catch (error) {
       console.log("Error:", error);
     }
@@ -50,38 +34,54 @@ function AddReviewForm() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="w-[50vw] mx-auto my-24 p-6 bg-white rounded-2xl shadow-lg flex flex-col items-center gap-4"
+      className="w-[90vw] sm:w-[80vw] md:w-[70vw] lg:w-[60vw] mx-auto my-14 p-6 bg-white rounded-2xl shadow-lg flex flex-col items-center gap-4"
     >
       <h2 className="text-2xl font-bold text-center text-heading">
-        Add you review
+        ADD REVIEW
       </h2>
       <motion.input
-        type="text"
+        type="text" //scammer page name
         name="name"
         placeholder="Name"
-        className="p-3 rounded-xl w-2/3 focus:outline-none leading-6 bg-background"
+        className="p-3 rounded-xl w-[85vw] sm:w-[75vw] md:w-[65vw] lg:w-[55vw] focus:outline-none leading-6 bg-background"
         onChange={handleChange}
       />
       <motion.input
         type="email"
         name="email"
         placeholder="Email"
-        className="p-3 rounded-xl w-2/3 focus:outline-none leading-6 bg-background"
+        className="p-3 rounded-xl w-[85vw] sm:w-[75vw] md:w-[65vw] lg:w-[55vw] focus:outline-none leading-6 bg-background"
         onChange={handleChange}
       />
+      <motion.input
+        type="text"
+        name="social-link"
+        placeholder="Social Link (Instagram, Facebook, etc.)"
+        className="p-3 rounded-xl w-[85vw] sm:w-[75vw] md:w-[65vw] lg:w-[55vw] focus:outline-none leading-6 bg-background"
+        onChange={handleChange}
+      />
+
+      <motion.input
+        type="text"
+        name="payment-type"
+        placeholder="Payment Type"
+        className="p-3 rounded-xl w-[85vw] sm:w-[75vw] md:w-[65vw] lg:w-[55vw] focus:outline-none leading-6 bg-background"
+        onChange={handleChange}
+      />
+
       <motion.input
         type="tel"
         name="number"
         placeholder="Phone Number"
-        className="p-3 rounded-xl w-2/3 focus:outline-none leading-6 bg-background"
+        className="p-3 rounded-xl w-[85vw] sm:w-[75vw] md:w-[65vw] lg:w-[55vw] focus:outline-none leading-6 bg-background"
         onChange={handleChange}
       />
-      <motion.input
+      <motion.textarea
         // whileFocus={{ scale: 1.05 }}
-        type="text"
+        type="textarea"
         name="description"
         placeholder="Please write you review here"
-        className="p-3 rounded-xl w-2/3 focus:outline-none leading-6 bg-background"
+        className="p-3 rounded-xl w-[85vw] sm:w-[75vw] md:w-[65vw] lg:w-[55vw] focus:outline-none leading-6 bg-background"
         onChange={handleChange}
       />
       <div className="flex flex-col items-center gap-2">
@@ -125,7 +125,7 @@ function AddReviewForm() {
       </div>
       <motion.button
         whileTap={{ scale: 0.95 }}
-        className="text-white p-3 rounded-4xl w-2/3 font-semibold bg-heading"
+        className="text-white p-3 rounded-4xl w-[80vw] sm:w-[45vw] lg:w-[35vw] font-semibold bg-heading"
         onClick={() => handleFormData()}
       >
         Submit

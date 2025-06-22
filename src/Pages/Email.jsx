@@ -37,29 +37,33 @@ function EmailSection() {
         autoplay
         loop
         src={Animation}
-        style={{ height: "100vh", width: "100vw" }}
+        style={{ height: "80vh", width: "80vw" }}
       />
     );
   }
 
   return (
-    <div className="flex justify-between pl-[85px]">
-      <div className="w-[40vw] flex flex-col justify-center items-center">
-        <div className="w-[500px] overflow-hidden my-3">
-          <h1
-            style={{ color: COLORS.text }}
-            className="text-3xl font-extrabold my-3"
-          >
-            Title Here ...
+    <div className="lg:flex justify-between items-center overflow-hidden lg:h-[80vh]">
+      <div className="lg:w-[50vw] xl:w-[55vw]">
+        <img src={EmailVectorImage} alt="hero email vector image" />
+      </div>
+      <section className="lg:w-[50vw] xl:w-[45vw] lg:flex flex-col justify-center">
+        <div className="flex flex-col mx-auto xl:mx-0 text-center w-[350px] md:w-[450px] xl:w-[500px] overflow-hidden my-7">
+          <h1 className="text-xl md:text-2xl xl:text-3xl font-extrabold my-3 text-heading">
+            Here we Exposed Scammers
           </h1>
-          <p>
+          <p className="text-sm md:text-base">
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
             non labore tenetur earum quisquam obcaecati.
           </p>
         </div>
-        <form className="flex flex-col" onSubmit={(e) => handleSubmit(e)}>
+        {/* Email form  */}
+        <form
+          className="flex flex-col justify-center items-center xl:items-start mx-auto xl:mx-0"
+          onSubmit={(e) => handleSubmit(e)}
+        >
           <input
-            className="border rounded-xl border-gray-700 w-[500px] p-4"
+            className="border rounded-xl border-gray-700 w-[350px] md:w-[450px] lg:w-[400px] xl:w-[500px] p-4"
             type="emai"
             name="email"
             placeholder="Enter you email..."
@@ -69,15 +73,12 @@ function EmailSection() {
           <button
             type="submit"
             style={{ backgroundColor: COLORS.text, color: "white" }}
-            className="w-[500px] border rounded-4xl my-3 p-3"
+            className="w-[350px] md:w-[450px] lg:w-[400px] xl:w-[500px] border rounded-4xl my-5 p-3"
           >
             Submit Your Email
           </button>
         </form>
-      </div>
-      <div className="w-[60vw]">
-        <img src={EmailVectorImage} alt="hero email vector image" />
-      </div>
+      </section>
     </div>
   );
 }
