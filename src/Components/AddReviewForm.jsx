@@ -104,7 +104,7 @@ function AddReviewForm() {
               return (
                 <motion.img
                   key={index}
-                  src={img}
+                  src={URL.createObjectURL(img)}
                   alt="Uploaded preview"
                   className="w-10 h-10 object-cover rounded-lg shadow-lg"
                   style={{
