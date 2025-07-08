@@ -1,28 +1,30 @@
+/* eslint-disable react/prop-types */
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-const Data = ({ navigate }) => {
+import { supabase } from "../database/supabase.js";
+const Data = ({ data, navigate }) => {
   return (
-    <div className="w-[85vw] sm:w-[70vw] xl:w-[60vw] mb-8 lg:flex gap-10 md:gap-3 rounded-2xl shadow-2xl overflow-hidden">
+    <div
+      // key={data?.id}
+      className="w-[85vw] sm:w-[70vw] xl:w-[60vw] mb-8 lg:flex gap-10 md:gap-3 rounded-2xl shadow-2xl overflow-hidden"
+    >
       <img
-        src={
-          "https://images.unsplash.com/photo-1493612276216-ee3925520721?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tfGVufDB8fDB8fHww"
-        }
+        src={data?.imageUrls[0]}
         alt="image"
         className="w-[85vw] sm:w-[70vw] md:w-[30vw] xl:w-[25vw] h-[30vh] sm:h-[35vh] lg:h-[51vh] xl:h-[40vh]"
       />
       <div className=" w-[80vw] sm:w-[60vw] md:w-[35vw] xl:w-[30vw] py-6 lg:flex lg:flex-col lg:justify-around text-center mx-auto">
         <div className="gap-7">
-          <p className=" text-xl text-heading font-bold">Developer</p>
-          <p className="text-xs pt-2">developer@test.com</p>
+          <p className=" text-xl text-heading font-bold">{data?.name}</p>
+          <p className="text-xs pt-2">{data?.email}</p>
         </div>
         <p className="text-sm sm:text-base pt-2 pb-4">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe quam at
-          veritatis dolorum eum eveniet modi, unde amet suscipit ipsam
-          voluptatum aut, corrupti laudantium officia!
+          {data?.reviewDetail || "No review details provided."}
         </p>
         <button
           className="mx-auto w-[70vw] sm:w-[60vw] md:w-[35vw] xl:w-[30vw] p-4 border rounded-4xl border-heading text-heading"
-          onClick={() => navigate(`/reviewDetails/${1234}`)}
+          // onClick={() => navigate(`/reviewDetails/${1234}`)}
         >
           Read Me..
         </button>
@@ -33,6 +35,23 @@ const Data = ({ navigate }) => {
 
 function ReviewsList() {
   const navigate = useNavigate();
+  const [reviews, setReviews] = useState([]);
+  useEffect(() => {
+    const fetchReviews = async () => {
+      const { data, error } = await supabase
+        .from("review")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) console.error("Error fetching reviews:", error.message);
+      setReviews(data);
+
+      console.log("Fetched reviews:", data);
+    };
+
+    fetchReviews();
+  }, []);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -43,10 +62,13 @@ function ReviewsList() {
       <h2 className="text-2xl py-4 font-bold text-center text-heading">
         RECENT REVIEWS
       </h2>
-      <Data navigate={navigate} />
-      <Data />
-      <Data />
-      <Data />
+      {reviews.length > 0 ? (
+        reviews.map((review) => (
+          <Data key={review?.id} data={review} navigate={navigate} />
+        ))
+      ) : (
+        <p className="text-center text-gray-500">No reviews available</p>
+      )}
     </motion.div>
   );
 }

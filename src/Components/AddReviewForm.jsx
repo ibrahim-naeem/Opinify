@@ -1,21 +1,100 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { motion } from "framer-motion";
 import { Camera } from "lucide-react";
+import { toast } from "react-toastify";
+import { MainContext } from "../Context/MainContext.jsx";
+import { supabase } from "../database/supabase.js";
 
 function AddReviewForm() {
-  const [images, setImages] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    number: "",
-    description: "",
+    socialLink: "",
+    paymentType: "",
+    phoneNumber: "",
+    reviewDetail: "",
+    images: [],
   });
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { setToggle } = useContext(MainContext);
 
-  const handleFormData = async () => {
+  const validateForm = () => {
+    const { name, email, reviewDetail, images } = formData;
+    if (!name || !email || !reviewDetail) {
+      toast.error("Name, Email, and Review Detail are required.");
+      return false;
+    }
+    if (!images || images.length === 0) {
+      toast.error("Please upload at least one image.");
+      return false;
+    }
+    return true;
+  };
+
+  const uploadImagesToSupabase = async (files) => {
+    const uploadedUrls = [];
+    for (const file of files) {
+      const fileName = `${Date.now()}-${file.name}`;
+      const { error } = await supabase.storage
+        .from("review-images")
+        .upload(fileName, file);
+
+      if (error) {
+        console.error("Image upload error:", error.message);
+        toast.error("Failed to upload one or more images.");
+      } else {
+        const { data } = supabase.storage
+          .from("review-images")
+          .getPublicUrl(fileName);
+        uploadedUrls.push(data.publicUrl);
+      }
+    }
+    return uploadedUrls;
+  };
+
+  const handleFormData = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+    const { name, email, socialLink, paymentType, phoneNumber, reviewDetail } =
+      formData;
+    setLoading(true);
     try {
-      console.log("state-data:", formData);
-    } catch (error) {
-      console.log("Error:", error);
+      const uploadedUrls = await uploadImagesToSupabase(formData.images);
+      const { error } = await supabase.from("review").insert([
+        {
+          name,
+          email,
+          socialLink,
+          paymentType,
+          phoneNumber,
+          reviewDetail,
+          imageUrls: uploadedUrls,
+        },
+      ]);
+
+      if (error) {
+        console.error("DB insert error:", error);
+        toast.error("Failed to submit the review.");
+      } else {
+        toast.success("Review submitted successfully!");
+        setFormData({
+          name: "",
+          email: "",
+          socialLink: "",
+          paymentType: "",
+          phoneNumber: "",
+          reviewDetail: "",
+          images: [],
+        });
+        setImages([]);
+        setToggle("recent");
+      }
+    } catch (err) {
+      console.log("Submit Error:", err);
+      toast.error("Something went wrong.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -23,12 +102,19 @@ function AddReviewForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleImageUpload = (event) => {
-    const selectedFiles = Array.from(event.target.files).slice(
-      0,
-      5 - images.length
-    );
-    setImages((prev) => [...selectedFiles, ...prev].slice(0, 5));
+    const selectedFiles = Array.from(event.target.files);
+
+    // Check total limit
+    if (images.length + selectedFiles.length > 5) {
+      toast.error("You can only upload a maximum of 5 images.");
+      return;
+    }
+
+    const updatedImages = [...images, ...selectedFiles];
+    setImages(updatedImages);
+    setFormData((prev) => ({ ...prev, images: updatedImages }));
   };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -39,51 +125,38 @@ function AddReviewForm() {
       <h2 className="text-2xl font-bold text-center text-heading">
         ADD REVIEW
       </h2>
-      <motion.input
-        type="text" //scammer page name
-        name="name"
-        placeholder="Name"
-        className="p-3 rounded-xl w-[85vw] sm:w-[75vw] md:w-[65vw] lg:w-[55vw] focus:outline-none leading-6 bg-background"
-        onChange={handleChange}
-      />
-      <motion.input
-        type="email"
-        name="email"
-        placeholder="Email"
-        className="p-3 rounded-xl w-[85vw] sm:w-[75vw] md:w-[65vw] lg:w-[55vw] focus:outline-none leading-6 bg-background"
-        onChange={handleChange}
-      />
-      <motion.input
-        type="text"
-        name="social-link"
-        placeholder="Social Link (Instagram, Facebook, etc.)"
-        className="p-3 rounded-xl w-[85vw] sm:w-[75vw] md:w-[65vw] lg:w-[55vw] focus:outline-none leading-6 bg-background"
-        onChange={handleChange}
-      />
+      <p>Please add the details of the business you want to report.</p>
 
-      <motion.input
-        type="text"
-        name="payment-type"
-        placeholder="Payment Type"
-        className="p-3 rounded-xl w-[85vw] sm:w-[75vw] md:w-[65vw] lg:w-[55vw] focus:outline-none leading-6 bg-background"
-        onChange={handleChange}
-      />
+      {[
+        { type: "text", name: "name", placeholder: "Name" },
+        { type: "email", name: "email", placeholder: "Email" },
+        {
+          type: "text",
+          name: "socialLink",
+          placeholder: "Social Link (Instagram, Facebook, etc.)",
+        },
+        { type: "text", name: "paymentType", placeholder: "Payment Type" },
+        { type: "tel", name: "phoneNumber", placeholder: "Phone Number" },
+      ].map(({ type, name, placeholder }) => (
+        <motion.input
+          key={name}
+          type={type}
+          name={name}
+          value={formData[name]}
+          placeholder={placeholder}
+          className="p-3 rounded-xl w-full max-w-2xl focus:outline-none leading-6 bg-background"
+          onChange={handleChange}
+        />
+      ))}
 
-      <motion.input
-        type="tel"
-        name="number"
-        placeholder="Phone Number"
-        className="p-3 rounded-xl w-[85vw] sm:w-[75vw] md:w-[65vw] lg:w-[55vw] focus:outline-none leading-6 bg-background"
-        onChange={handleChange}
-      />
       <motion.textarea
-        // whileFocus={{ scale: 1.05 }}
-        type="textarea"
-        name="description"
-        placeholder="Please write you review here"
-        className="p-3 rounded-xl w-[85vw] sm:w-[75vw] md:w-[65vw] lg:w-[55vw] focus:outline-none leading-6 bg-background"
+        name="reviewDetail"
+        value={formData.reviewDetail}
+        placeholder="Please write your review here"
+        className="p-3 rounded-xl w-full max-w-2xl focus:outline-none leading-6 bg-background min-h-[100px]"
         onChange={handleChange}
       />
+
       <div className="flex flex-col items-center gap-2">
         <label className="cursor-pointer flex items-center gap-2 text-white px-4 py-2 rounded-xl text-primaryA bg-secondaryButton">
           <Camera size={20} /> Add Pics (Max 5)
@@ -95,17 +168,22 @@ function AddReviewForm() {
             onChange={handleImageUpload}
           />
         </label>
-        {images.length !== 0 ? (
+        <p className="text-sm text-gray-600">
+          {5 - images.length} image{5 - images.length !== 1 ? "s" : ""}{" "}
+          remaining
+        </p>
+
+        {images.length > 0 && (
           <div className="flex justify-center items-center relative h-10 w-full">
             {images.map((img, index) => {
-              const totalWidth = images.length * 20; // Total width occupied by images
-              const centerOffset = totalWidth / 2; // Offset to center them
-              // const imgUrl = URL.createObjectURL(img);
+              const totalWidth = images.length * 20;
+              const centerOffset = totalWidth / 2;
+              const imgUrl = URL.createObjectURL(img);
               return (
                 <motion.img
                   key={index}
-                  src={URL.createObjectURL(img)}
-                  alt="Uploaded preview"
+                  src={imgUrl}
+                  alt="preview"
                   className="w-10 h-10 object-cover rounded-lg shadow-lg"
                   style={{
                     position: "absolute",
@@ -115,20 +193,23 @@ function AddReviewForm() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
+                  onLoad={() => URL.revokeObjectURL(imgUrl)} // Clean up
                 />
               );
             })}
           </div>
-        ) : (
-          ""
         )}
       </div>
+
       <motion.button
         whileTap={{ scale: 0.95 }}
-        className="text-white p-3 rounded-4xl w-[80vw] sm:w-[45vw] lg:w-[35vw] font-semibold bg-heading"
-        onClick={() => handleFormData()}
+        disabled={loading}
+        className={`text-white p-3 rounded-4xl w-[80vw] sm:w-[45vw] lg:w-[35vw] font-semibold ${
+          loading ? "bg-gray-400" : "bg-heading"
+        }`}
+        onClick={handleFormData}
       >
-        Submit
+        {loading ? "Submitting..." : "Submit"}
       </motion.button>
     </motion.div>
   );

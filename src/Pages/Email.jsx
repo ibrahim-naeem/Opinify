@@ -40,6 +40,7 @@ function EmailSection() {
 
     if (emailError) return new Error(emailError);
     toast.success("Email registered successfully");
+    setEmail("");
     localStorage.setItem("user_id", newUser.userId);
     return newUser;
   };
