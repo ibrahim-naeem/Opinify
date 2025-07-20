@@ -7,25 +7,33 @@ import Review from "./Pages/Review.jsx";
 import ReviewDetailView from "./Components/ReviewDetailView.jsx";
 import { Bounce, ToastContainer } from "react-toastify";
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      element: <MainLayout />,
+      children: [
+        {
+          path: "/",
+          element: <Email />,
+        },
+        {
+          path: "review",
+          element: <Review />,
+        },
+        {
+          path: "reviewDetails/:id",
+          element: <ReviewDetailView />,
+        },
+      ],
+    },
+  ],
   {
-    element: <MainLayout />,
-    children: [
-      {
-        path: "/",
-        element: <Email />,
-      },
-      {
-        path: "review",
-        element: <Review />,
-      },
-      {
-        path: "reviewDetails/:id",
-        element: <ReviewDetailView />,
-      },
-    ],
-  },
-]);
+    future: {
+      v7_relativeSplatPath: true,
+      v7_startTransition: true,
+    },
+  }
+);
 
 function App() {
   return (

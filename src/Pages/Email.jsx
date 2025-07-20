@@ -1,74 +1,72 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Player } from "@lottiefiles/react-lottie-player";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
-import { MainContext } from "../Context/MainContext";
 import { supabase } from "../database/supabase";
 
 import { COLORS } from "../assets/Colors";
 import EmailVectorImage from "../assets/email-vector.jpg";
-import Animation from "../assets/Animation - 1740910205152.json";
+import Animation from "../assets/loading-animation.json";
 
 // eslint-disable-next-line react/prop-types
 function EmailSection() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState();
+  const [email, setEmail] = useState("");
   const currentUser = localStorage.getItem("user_id");
 
-  const { emailLottie, setEmailLottie } = useContext(MainContext);
-  const [email, setEmail] = useState("");
-
   const saveEmailtoDB = async (email) => {
+    setLoading(true);
     const { data: existingUser, error: userfetchingError } = await supabase
       .from("users")
-      .select("userId")
+      .select("")
       .eq("email", email)
       .single();
 
-    if (userfetchingError) return new Error(userfetchingError);
+    if (userfetchingError) {
+      console.log(userfetchingError.message);
+    }
     if (existingUser) {
+      setLoading(false);
       toast.success("You are already registered with this email");
       localStorage.setItem("user_id", existingUser.userId);
+      localStorage.setItem("user_email", existingUser.email);
       return existingUser;
     }
 
     const { data: newUser, error: emailError } = await supabase
       .from("users")
-      .insert({ email })
+      .insert([{ email: email }])
       .select("userId")
       .single();
 
     if (emailError) return new Error(emailError);
-    toast.success("Email registered successfully");
+
     setEmail("");
+    setLoading(false);
+    navigate("/review");
+    toast.success("Email registered successfully");
     localStorage.setItem("user_id", newUser.userId);
-    return newUser;
+    localStorage.setItem("user_email", newUser.email);
+
+    return { emailError, newUser };
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setEmailLottie(true);
-
     if (!email) return new Error("Email is required");
     const res = await saveEmailtoDB(email);
-
-    setTimeout(() => {
-      setEmailLottie(false);
-      navigate("/review");
-    }, 2000);
+    console.log(res);
   };
 
   useEffect(() => {
-    !currentUser ? navigate("/") : navigate("/review");
+    if (currentUser) {
+      navigate("/review");
+    }
+  }, [currentUser, navigate]);
 
-    const timer = setTimeout(() => {
-      emailLottie && setEmailLottie(false);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, [emailLottie, currentUser, navigate, setEmailLottie]);
-
-  if (emailLottie) {
+  if (loading) {
     return (
       <Player
         autoplay
@@ -103,7 +101,7 @@ function EmailSection() {
             className="border rounded-xl border-gray-700 w-[350px] md:w-[450px] lg:w-[400px] xl:w-[500px] p-4"
             type="emai"
             name="email"
-            placeholder="Enter you email..."
+            placeholder="Enter your email here..."
             required
             onChange={(e) => setEmail(e.target.value)}
           />

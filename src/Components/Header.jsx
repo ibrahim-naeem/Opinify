@@ -12,7 +12,7 @@ function Header() {
       <div className="h-20 flex justify-around items-center">
         <h1
           className={`text-4xl font-extrabold font-comfortaa text-heading`}
-          onClick={() => navigate("/review")}
+          onClick={() => navigate("/")}
         >
           Opinify
         </h1>

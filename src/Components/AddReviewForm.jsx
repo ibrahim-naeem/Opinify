@@ -6,6 +6,7 @@ import { MainContext } from "../Context/MainContext.jsx";
 import { supabase } from "../database/supabase.js";
 
 function AddReviewForm() {
+  const curentUserEmail = localStorage.getItem("user_email");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -70,6 +71,7 @@ function AddReviewForm() {
           phoneNumber,
           reviewDetail,
           imageUrls: uploadedUrls,
+          userEmail: curentUserEmail,
         },
       ]);
 
@@ -168,10 +170,14 @@ function AddReviewForm() {
             onChange={handleImageUpload}
           />
         </label>
+
         <p className="text-sm text-gray-600">
           {5 - images.length} image{5 - images.length !== 1 ? "s" : ""}{" "}
           remaining
         </p>
+        <span className="w-50vw text-center text-sm text-gray-600 underline">
+          Notice - Please first choose image containing brand logo.
+        </span>
 
         {images.length > 0 && (
           <div className="flex justify-center items-center relative h-10 w-full">
