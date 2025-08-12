@@ -20,11 +20,11 @@ function EmailSection() {
       email,
       options: {
         shouldCreateUser: true,
-        emailRedirectTo: "http://localhost:5173/review",
+        emailRedirectTo: "https://opinify.vercel.app/review", // "http://localhost:5173/review",
       },
     });
     toast.success("Check your email for the magic link!");
-    setLoading(true);
+    setLoading(true);git a
     if (error) {
       setLoading(false);
       console.error("Error sending magic link:", error.message);
