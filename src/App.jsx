@@ -1,5 +1,9 @@
 import { useEffect } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import { Bounce, ToastContainer } from "react-toastify";
 
 import { useMainConext } from "./hooks/useMainContext.js";
@@ -32,6 +36,11 @@ const router = createBrowserRouter(
         {
           path: "myReviews",
           element: <MyReviews />,
+        },
+        // Catch-all redirect
+        {
+          path: "*",
+          element: <Navigate to="/review" replace />,
         },
       ],
     },
