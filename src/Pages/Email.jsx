@@ -24,7 +24,7 @@ function EmailSection() {
       },
     });
     toast.success("Check your email for the magic link!");
-    setLoading(true);git a
+    setLoading(true);
     if (error) {
       setLoading(false);
       console.error("Error sending magic link:", error.message);
