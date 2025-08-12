@@ -20,7 +20,7 @@ function EmailSection() {
       email,
       options: {
         shouldCreateUser: true,
-        emailRedirectTo: "https://opinify.vercel.app/review",
+        emailRedirectTo: "https://opinify-ibrahimnaeems-projects.vercel.app/review",
       },
     });
     toast.success("Check your email for the magic link!");
