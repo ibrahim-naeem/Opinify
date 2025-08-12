@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useParams } from "react-router";
 import { Player } from "@lottiefiles/react-lottie-player";
@@ -10,8 +10,6 @@ import ImageCarousel from "./ImageCarousel";
 function ReviewDetailView() {
   const { id } = useParams();
   const [review, setReview] = useState({});
-  // const images = review?.imageUrls.reverse();
-  // console.log("__", images);
   const isoDate = review?.created_at;
   const dateObj = new Date(isoDate);
   const formattedDate = `${dateObj.getFullYear()}/${

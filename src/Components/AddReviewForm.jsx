@@ -2,11 +2,14 @@ import { useState, useContext } from "react";
 import { motion } from "framer-motion";
 import { Camera } from "lucide-react";
 import { toast } from "react-toastify";
-import { MainContext } from "../Context/MainContext.jsx";
+import { MainContext } from "../Context/MainContext.js";
 import { supabase } from "../database/supabase.js";
+import { useMainConext } from "../hooks/useMainContext.js";
 
 function AddReviewForm() {
-  const curentUserEmail = localStorage.getItem("user_email");
+  const { session } = useMainConext();
+  const curentUserEmail = session?.user?.email;
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -132,11 +135,6 @@ function AddReviewForm() {
       {[
         { type: "text", name: "name", placeholder: "Name" },
         { type: "email", name: "email", placeholder: "Email" },
-        {
-          type: "text",
-          name: "socialLink",
-          placeholder: "Social Link (Instagram, Facebook, etc.)",
-        },
         { type: "text", name: "paymentType", placeholder: "Payment Type" },
         { type: "tel", name: "phoneNumber", placeholder: "Phone Number" },
       ].map(({ type, name, placeholder }) => (
@@ -150,6 +148,22 @@ function AddReviewForm() {
           onChange={handleChange}
         />
       ))}
+      <motion.select
+        type="select"
+        name="socialLink"
+        className=" border p-3 rounded-xl w-full max-w-2xl
+        focus:outline-none leading-6 bg-background"
+        onChange={handleChange}
+        defaultValue={"Select social account"}
+      >
+        <option value="Select social account" disabled>
+          Please select social account
+        </option>
+        <option value="Instagram">Instagram</option>
+        <option value="Facebook">Facebook</option>
+        <option value="Twitter">Twitter</option>
+        <option value="LinkedIn">LinkedIn</option>
+      </motion.select>
 
       <motion.textarea
         name="reviewDetail"

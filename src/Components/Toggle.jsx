@@ -1,16 +1,11 @@
-import { useContext } from "react";
-import { COLORS } from "../assets/Colors";
-
 import { motion } from "framer-motion";
-import { MainContext } from "../Context/MainContext";
-
+import { useMainConext } from "../hooks/useMainContext.js";
 function Toggle() {
-  const { toggle, setToggle } = useContext(MainContext);
+  const { toggle, setToggle } = useMainConext();
   return (
     <button
       type="button"
-      style={{ backgroundColor: COLORS.text }}
-      className="rounded-4xl w-[80vw] sm:w-[45vw] lg:w-[35vw] relative py-4"
+      className=" bg-heading rounded-4xl w-[80vw] sm:w-[45vw] lg:w-[35vw] relative py-4"
     >
       <motion.span
         initial={{ x: 0 }}
