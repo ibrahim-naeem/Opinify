@@ -90,7 +90,11 @@ function Header() {
             </li>
             <li className="text-center border-b py-3">Services</li>
             <li className="text-center border-b b py-3 ">About us</li>
-            {session && <li className="text-center  py-3 ">Sign out</li>}
+            {session && (
+              <li onClick={signOut} className="text-center  py-3 ">
+                {loading ? "Signing out..." : "Sign out"}
+              </li>
+            )}
           </ul>
         )}
       </div>
