@@ -20,7 +20,7 @@ function EmailSection() {
       email,
       options: {
         shouldCreateUser: true,
-        emailRedirectTo: "http://localhost:5173/review",
+        emailRedirectTo: "https://opinify.vercel.app/review",
       },
     });
     // insertUserIfNotExists(email);
