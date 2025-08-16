@@ -236,3 +236,18 @@ function AddReviewForm() {
 }
 
 export default AddReviewForm;
+
+//  insert error:
+// {code: '42501', details: null, hint: null, message: 'new row violates row-level security policy for table "review"'}
+// code
+// :
+// "42501"
+// details
+// :
+// null
+// hint
+// :
+// null
+// message
+// :
+// "new row violates row-level security policy for table \"review\""

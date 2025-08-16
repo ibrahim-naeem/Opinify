@@ -10,19 +10,22 @@ import { useMainConext } from "../hooks/useMainContext.js";
 
 const MyReview = () => {
   const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { session } = useMainConext();
   const currentUser = session?.user?.email;
 
   useEffect(() => {
     const fetchReviews = async () => {
+      setLoading(true);
       const data = await fetchReviewsByUser(currentUser);
       setReviews(data);
+      setLoading(false);
     };
 
     fetchReviews();
   }, [currentUser]);
 
-  if (!reviews.length) {
+  if (loading) {
     return (
       <Player
         autoplay

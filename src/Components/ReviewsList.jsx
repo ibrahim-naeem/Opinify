@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { fetchReviews, fetchReviewsByFilter } from "../api/reviews.js";
-
 import ReviewCard from "./ReviewCard.jsx";
 import Search from "./Search.jsx";
 import { useMainConext } from "../hooks/useMainContext.js";
@@ -11,24 +10,29 @@ import Animation from "../assets/Business Idea Animation.json";
 
 const ReviewsList = () => {
   const [reviews, setReviews] = useState([]);
-  const [loading, setloading] = useState(false);
-  const { filter } = useMainConext();
+  const [reviewsByQuery, setReviewsByQuery] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { filter, searchQuery } = useMainConext();
+
+  const getReviews = useCallback(async () => {
+    setLoading(true);
+    const data = filter
+      ? await fetchReviewsByFilter(filter)
+      : await fetchReviews();
+    setReviews(data);
+    setLoading(false);
+  }, [filter]);
 
   useEffect(() => {
-    const getReviews = async () => {
-      setloading(true);
-      if (filter) {
-        const filteredReviews = await fetchReviewsByFilter(filter);
-        setReviews(filteredReviews);
-        setloading(false);
-      } else {
-        const allReviews = await fetchReviews();
-        setReviews(allReviews);
-        setloading(false);
-      }
-    };
     getReviews();
-  }, [filter]);
+  }, [getReviews]);
+
+  useEffect(() => {
+    const queriedReviews = reviews.filter((review) =>
+      review.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setReviewsByQuery(queriedReviews);
+  }, [reviews, searchQuery]);
 
   if (loading) {
     return (
@@ -41,17 +45,42 @@ const ReviewsList = () => {
     );
   }
 
+  if (searchQuery)
+    return (
+      <>
+        <Search />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="w-[95vw] lg:w-[60vw] mx-auto my-8 flex flex-col items-center gap-6"
+        >
+          <h2 className="text-2xl font-bold text-heading py-4 text-center">
+            ALL REVIEWS
+          </h2>
+
+          {reviewsByQuery.length > 0 ? (
+            reviewsByQuery.map((review) => (
+              <ReviewCard key={review.id} review={review} />
+            ))
+          ) : (
+            <p className="text-center text-gray-500">No reviews available</p>
+          )}
+        </motion.div>
+      </>
+    );
+
   return (
     <>
       <Search />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.4 }}
         className="w-[95vw] lg:w-[60vw] mx-auto my-8 flex flex-col items-center gap-6"
       >
         <h2 className="text-2xl font-bold text-heading py-4 text-center">
-          RECENT REVIEWS
+          ALL REVIEWS
         </h2>
 
         {reviews.length > 0 ? (

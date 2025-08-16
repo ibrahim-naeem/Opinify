@@ -13,8 +13,8 @@ const ReviewCard = ({ review }) => {
         className=" w-full lg:w-[30vw] xl:w-[25vw] h-[30vh] sm:h-[35vh] lg:h-[51vh] xl:h-[40vh]"
       />
       <div className="relative p-6 flex flex-col justify-between text-center lg:w-[40vw] xl:w-[35vw]">
-        <h1 className="absolute right-10">
-          {review?.isApproved ? "Approved" : "Pending"}
+        <h1 className="lg:w-[100px] absolute right-10 lg:right-2.5 text-xs text-heading p-2 hover:text-sm transition-all">
+          {!review?.isApproved && "Approval pending "}
         </h1>
         <div>
           <p className="text-xl font-bold text-heading">{review?.name}</p>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { MainContext } from "../Context/MainContext";
 
 // eslint-disable-next-line react/prop-types
@@ -10,20 +10,24 @@ export const MainContextProvider = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState("");
 
-  return (
-    <MainContext.Provider
-      value={{
-        session,
-        setSession,
-        toggle,
-        setToggle,
-        filter,
-        setFilter,
-        searchQuery,
-        setSearchQuery,
-      }}
-    >
-      {children}
-    </MainContext.Provider>
+  // admin
+  const [admin, setAdmin] = useState(false);
+
+  const value = useMemo(
+    () => ({
+      session,
+      setSession,
+      toggle,
+      setToggle,
+      filter,
+      setFilter,
+      searchQuery,
+      setSearchQuery,
+      admin,
+      setAdmin,
+    }),
+    [session, toggle, searchQuery, filter, admin]
   );
+
+  return <MainContext.Provider value={value}>{children}</MainContext.Provider>;
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 import { LuMenu, LuX } from "react-icons/lu";
@@ -8,7 +8,7 @@ import { useMainConext } from "../hooks/useMainContext";
 function Header() {
   const navigate = useNavigate();
   const [showNav, setShowNav] = useState(false);
-  const { session } = useMainConext();
+  const { session, admin } = useMainConext();
   const [loading, setLoading] = useState(false);
 
   const signOut = async () => {
@@ -21,6 +21,10 @@ function Header() {
     setLoading(false);
   };
 
+  // useEffect(() => {
+  //   !isAuthenticated && navigate("/");
+  // }, [isAuthenticated, navigate]);
+
   return (
     <>
       <div className="h-20 flex justify-around items-center">
@@ -28,7 +32,7 @@ function Header() {
           className={`text-4xl font-extrabold font-comfortaa text-heading`}
           onClick={() => navigate("/review")}
         >
-          Opinify
+          Opinify {admin ? "yes" : "no"}
         </h1>
 
         {showNav ? (
@@ -44,9 +48,14 @@ function Header() {
         )}
 
         <ul className="hidden sm:flex w-[45vw] xl:w-[35vw] justify-around items-center text-base md:text-lg xl:text-xl text-heading font-semibold transition duration-700 ease-in-out">
-          <li className="text-sm hover:text-xl duration-300 ease-in-out">
+          {/* <li className="text-sm hover:text-xl duration-300 ease-in-out">
             How it works
-          </li>
+          </li> */}
+          {admin && (
+            <li className="text-sm hover:text-xl duration-300 ease-in-out">
+              <Link to="/recentReviews">Recent reviews</Link>
+            </li>
+          )}
           <li className="text-sm hover:text-xl duration-300 ease-in-out">
             <Link to="/myReviews">My reviews</Link>
           </li>
@@ -70,9 +79,13 @@ function Header() {
       <div className="relative flex justify-around">
         {showNav && (
           <ul className="z-100 sm:hidden rounded absolute w-100 py-2 flex-col justify-around text-base text-white font-semibold bg-gradient-to-bl from-white to-heading">
-            <li className="text-center border-b py-3">How it works</li>
+            {/* <li className="text-center border-b py-3">How it works</li> */}
+            {admin && (
+              <li className="text-center border-b py-3">
+                <Link to="/recentReviews">Recent reviews</Link>
+              </li>
+            )}
             <li className="text-center border-b py-3">
-              {" "}
               <Link to="/myReviews">My reviews</Link>
             </li>
             <li className="text-center border-b py-3">Services</li>

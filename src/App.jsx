@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   createBrowserRouter,
   Navigate,
   RouterProvider,
+  useNavigate,
 } from "react-router-dom";
 import { Bounce, ToastContainer } from "react-toastify";
 
@@ -15,6 +16,9 @@ import Review from "./Pages/Review.jsx";
 
 import MainLayout from "./Components/MainLayout.jsx";
 import ReviewDetailView from "./Components/ReviewDetailView.jsx";
+
+import { AnimatedTable } from "./Components/AnimatedTable.jsx";
+import { getUser } from "./api/user.js";
 
 const router = createBrowserRouter(
   [
@@ -37,7 +41,10 @@ const router = createBrowserRouter(
           path: "myReviews",
           element: <MyReviews />,
         },
-        // Catch-all redirect
+        {
+          path: "recentReviews",
+          element: <AnimatedTable />,
+        },
         {
           path: "*",
           element: <Navigate to="/review" replace />,
@@ -54,15 +61,39 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  const { session, setSession } = useMainConext();
+  const { session, setSession, setAdmin } = useMainConext();
+
+  const insertUserIfNotExists = async (email) => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    const res = await fetch(
+      `${import.meta.env.VITE_SUPABASE_FUNCTION_URL}/insert-user`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.access_token}`, // send JWT
+        },
+        body: JSON.stringify({ email }),
+      }
+    );
+    const user = await res.json();
+    // console.log(user);
+    setAdmin(user?.admin);
+  };
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
+      insertUserIfNotExists(session?.user?.email);
     });
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
+      session?.user?.role !== "authenticated";
     });
     return () => subscription.unsubscribe();
   }, []);

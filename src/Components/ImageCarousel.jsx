@@ -16,14 +16,14 @@ function ImageCarousel({ images }) {
   }, [images.length]);
 
   return (
-    <div className="relative w-full  mx-auto overflow-hidden rounded-xl shadow-lg">
+    <div className="relative w-full  mx-auto overflow-hidden rounded-xl ">
       <img
         src={images[current]}
         alt={`slide-${current}`}
         className="w-full h-[250px] sm:h-[400px] object-contain transition duration-700 ease-in-out"
       />
 
-      <button
+      {/* <button
         onClick={goToPrev}
         className="absolute top-1/2 left-2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black"
       >
@@ -34,7 +34,7 @@ function ImageCarousel({ images }) {
         className="absolute top-1/2 right-2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black"
       >
         ❯
-      </button>
+      </button> */}
 
       <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
         {images.map((_, index) => (
