@@ -32,7 +32,7 @@ function Header() {
           className={`text-4xl font-extrabold font-comfortaa text-heading`}
           onClick={() => navigate("/review")}
         >
-          Opinify {admin ? "yes" : "no"}
+          Scamsnoop
         </h1>
 
         {showNav ? (

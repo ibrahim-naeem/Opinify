@@ -52,18 +52,19 @@ function ReviewDetailView() {
       className=" w-[70vw] mx-auto my-10 bg-white flex flex-col items-center
     gap-4 rounded-2xl"
     >
-      <div className="flex justify-around border-2 rounded-full bg-heading text-white w-[70vw] p-6 sm:text-xl font-bold">
-        <div>{review?.id}</div>
+      <div className="flex justify-between border-2 rounded-full bg-heading text-white w-[70vw] p-6 sm:px-20 lg:px-30 text-sm sm:text-xl font-bold">
+        {/* <div>{review?.id}</div> */}
         <p>{review?.name}</p>
         <div>{formattedDate}</div>
       </div>
       <ImageCarousel images={review?.imageUrls} />
 
-      <div className="overflow-hidden flex justify-center text-heading sm:text-xl rounded-2xl shadow-2xl w-[70vw] lg:w-[75vw] p-10">
-        <div className="  text-center lg:flex justify-between w-[300px] md:w-[450px] lg:w-[800px] xl:w-850px]">
-          <div className="  my-2 py-4 flex flex-col">
+      <div className="overflow-hidden flex justify-center text-heading text-sm sm:text-xl rounded-2xl shadow-2xl w-[70vw] lg:w-[75vw] p-10">
+        <div className="text-center lg:flex justify-between w-[300px] md:w-[450px] lg:w-[800px] xl:w-850px]">
+          <div className="my-2 py-4 flex flex-col">
             <p className="pb-3"> {review?.email}</p>
             <p className="pb-3">{review?.paymentType}</p>
+            <p className="pb-3">{review?.paymentDescription}</p>
             <p className="pb-3">{review?.phoneNumber}</p>
             <p>{review?.socialLink}</p>
           </div>

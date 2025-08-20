@@ -13,9 +13,10 @@ function AddReviewForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    socialLink: "",
-    paymentType: "",
     phoneNumber: "",
+    paymentType: "",
+    paymentDescription: "",
+    socialLink: "",
     reviewDetail: "",
     images: [],
   });
@@ -24,9 +25,9 @@ function AddReviewForm() {
   const { setToggle } = useContext(MainContext);
 
   const validateForm = () => {
-    const { name, email, reviewDetail, images } = formData;
-    if (!name || !email || !reviewDetail) {
-      toast.error("Name, Email, and Review Detail are required.");
+    const { name, reviewDetail, images } = formData;
+    if (!name || !reviewDetail) {
+      toast.error("Name, and Review Detail are required.");
       return false;
     }
     if (!images || images.length === 0) {
@@ -60,8 +61,15 @@ function AddReviewForm() {
   const handleFormData = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    const { name, email, socialLink, paymentType, phoneNumber, reviewDetail } =
-      formData;
+    const {
+      name,
+      email,
+      socialLink,
+      paymentType,
+      paymentDescription,
+      phoneNumber,
+      reviewDetail,
+    } = formData;
     setLoading(true);
     try {
       const uploadedUrls = await uploadImagesToSupabase(formData.images);
@@ -71,6 +79,7 @@ function AddReviewForm() {
           email,
           socialLink,
           paymentType,
+          paymentDescription,
           phoneNumber,
           reviewDetail,
           imageUrls: uploadedUrls,
@@ -88,6 +97,7 @@ function AddReviewForm() {
           email: "",
           socialLink: "",
           paymentType: "",
+          paymentDescription: "",
           phoneNumber: "",
           reviewDetail: "",
           images: [],
@@ -135,7 +145,6 @@ function AddReviewForm() {
       {[
         { type: "text", name: "name", placeholder: "Name" },
         { type: "email", name: "email", placeholder: "Email" },
-        { type: "text", name: "paymentType", placeholder: "Payment Type" },
         { type: "tel", name: "phoneNumber", placeholder: "Phone Number" },
       ].map(({ type, name, placeholder }) => (
         <motion.input
@@ -150,8 +159,34 @@ function AddReviewForm() {
       ))}
       <motion.select
         type="select"
+        name="paymentType"
+        className="  p-3 rounded-xl w-full max-w-2xl
+        focus:outline-none leading-6 bg-background"
+        onChange={handleChange}
+        defaultValue={"Select payment method"}
+      >
+        <option value="Select payment method" disabled>
+          Please select payment method
+        </option>
+        <option value="COD">COD</option>
+        <option value="Bank">Bank</option>
+        <option value="Easypaisa">Easypaisa</option>
+        <option value="JazzCash">JazhCash</option>
+        <option value="Other">Other</option>
+      </motion.select>
+
+      <motion.input
+        type="text"
+        name="paymentDescription"
+        placeholder="Please provide account number"
+        className="p-3 rounded-xl w-full max-w-2xl focus:outline-none leading-6 bg-background"
+        onChange={handleChange}
+      />
+
+      <motion.select
+        type="select"
         name="socialLink"
-        className=" border p-3 rounded-xl w-full max-w-2xl
+        className="p-3 rounded-xl w-full max-w-2xl
         focus:outline-none leading-6 bg-background"
         onChange={handleChange}
         defaultValue={"Select social account"}

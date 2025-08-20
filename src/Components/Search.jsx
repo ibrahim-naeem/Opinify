@@ -21,7 +21,7 @@ function Search() {
       </div>
       <div className=" flex flex-col items-center md:flex-row gap-3">
         <p>Search by filters : </p>
-        {["Instagram", "Facebook", "Twitter", "LinkedIn"].map((platform) => (
+        {["Instagram", "Facebook", "Tiktok", "Whatsapp"].map((platform) => (
           <button
             className="border bg-heading text-white hover:text-heading hover:bg-white  px-4 py-2 rounded-full"
             key={platform}
