@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   createBrowserRouter,
   Navigate,
@@ -18,7 +18,6 @@ import MainLayout from "./Components/MainLayout.jsx";
 import ReviewDetailView from "./Components/ReviewDetailView.jsx";
 
 import { AnimatedTable } from "./Components/AnimatedTable.jsx";
-import { getUser } from "./api/user.js";
 
 const router = createBrowserRouter(
   [
@@ -61,7 +60,7 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  const { session, setSession, setAdmin } = useMainConext();
+  const { setSession, setAdmin } = useMainConext();
 
   const insertUserIfNotExists = async (email) => {
     const {
@@ -80,25 +79,35 @@ function App() {
       }
     );
     const user = await res.json();
-    // console.log(user);
     setAdmin(user?.admin);
   };
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    const getSession = async () => {
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession();
+      if (error) {
+        console.error("Error fetching session:", error.message);
+        return;
+      }
       setSession(session);
       insertUserIfNotExists(session?.user?.email);
-    });
+      localStorage.setItem("isAuthenticated", session?.user?.role || "");
+    };
+    getSession();
+
     const {
       data: { subscription },
+      error: subError,
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
-      session?.user?.role !== "authenticated";
     });
+    if (subError) console.error("Auth state change error:", subError);
     return () => subscription.unsubscribe();
   }, []);
 
-  console.log("Session:", session);
   return (
     <>
       <ToastContainer

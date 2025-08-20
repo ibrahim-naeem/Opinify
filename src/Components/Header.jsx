@@ -8,10 +8,14 @@ import { useMainConext } from "../hooks/useMainContext";
 function Header() {
   const navigate = useNavigate();
   const [showNav, setShowNav] = useState(false);
-  const { session, admin } = useMainConext();
+  const { setFilter, session, admin } = useMainConext();
   const [loading, setLoading] = useState(false);
 
+  const isAuthenticated =
+    localStorage.getItem("isAuthenticated") === "authenticated";
+
   const signOut = async () => {
+    localStorage.removeItem("isAuthenticated");
     setLoading(true);
     const { error } = await supabase.auth.signOut();
     if (error) {
@@ -21,16 +25,21 @@ function Header() {
     setLoading(false);
   };
 
-  // useEffect(() => {
-  //   !isAuthenticated && navigate("/");
-  // }, [isAuthenticated, navigate]);
+  useEffect(() => {
+    setTimeout(() => {
+      !isAuthenticated && navigate("/");
+    }, 1100);
+  }, [isAuthenticated, navigate]);
 
   return (
     <>
       <div className="h-20 flex justify-around items-center">
         <h1
           className={`text-4xl font-extrabold font-comfortaa text-heading`}
-          onClick={() => navigate("/review")}
+          onClick={() => {
+            setFilter("");
+            navigate("/review");
+          }}
         >
           Scamsnoop
         </h1>
@@ -48,30 +57,31 @@ function Header() {
         )}
 
         <ul className="hidden sm:flex w-[45vw] xl:w-[35vw] justify-around items-center text-base md:text-lg xl:text-xl text-heading font-semibold transition duration-700 ease-in-out">
-          {/* <li className="text-sm hover:text-xl duration-300 ease-in-out">
-            How it works
-          </li> */}
-          {admin && (
-            <li className="text-sm hover:text-xl duration-300 ease-in-out">
-              <Link to="/recentReviews">Recent reviews</Link>
-            </li>
-          )}
-          <li className="text-sm hover:text-xl duration-300 ease-in-out">
-            <Link to="/myReviews">My reviews</Link>
-          </li>
-          <li className="text-sm hover:text-xl duration-300 ease-in-out">
-            Services
-          </li>
-          <li className="text-sm hover:text-xl duration-300 ease-in-out">
-            About us
-          </li>
-          {session && (
-            <button
-              onClick={signOut}
-              className="text-sm transition duration-500 ease-in-out hover:bg-white hover:text-heading hover:border-2 rounded-full  px-4 py-2 bg-heading text-white"
-            >
-              {loading ? "Signing out..." : "Sign out"}
-            </button>
+          {isAuthenticated && (
+            <>
+              {admin && (
+                <li className="text-sm hover:text-xl duration-300 ease-in-out">
+                  <Link to="/recentReviews">Recent reviews</Link>
+                </li>
+              )}
+              <li className="text-sm hover:text-xl duration-300 ease-in-out">
+                <Link to="/myReviews">My reviews</Link>
+              </li>
+              <li className="text-sm hover:text-xl duration-300 ease-in-out">
+                Services
+              </li>
+              <li className="text-sm hover:text-xl duration-300 ease-in-out">
+                About us
+              </li>
+              {session && (
+                <button
+                  onClick={signOut}
+                  className="text-sm transition duration-500 ease-in-out hover:bg-white hover:text-heading hover:border-2 rounded-full  px-4 py-2 bg-heading text-white"
+                >
+                  {loading ? "Signing out..." : "Sign out"}
+                </button>
+              )}
+            </>
           )}
         </ul>
       </div>

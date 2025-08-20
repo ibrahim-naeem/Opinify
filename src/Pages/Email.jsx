@@ -23,7 +23,6 @@ function EmailSection() {
         emailRedirectTo: "https://opinify.vercel.app/review",
       },
     });
-    // insertUserIfNotExists(email);
     toast.success("Check your email for the magic link!");
     setLoading(true);
     if (error) {
@@ -36,8 +35,7 @@ function EmailSection() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email) return new Error("Email is required");
-    const res = await signInWithMagicLink(email);
-    console.log(res);
+    await signInWithMagicLink(email);
   };
 
   useEffect(() => {

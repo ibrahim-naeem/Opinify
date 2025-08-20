@@ -22,8 +22,6 @@ function ReviewDetailView() {
         .select()
         .eq("id", reviewId);
 
-      console.log(data[0]);
-
       if (error) {
         console.error("Error fetching reviews:", error.message);
       } else {

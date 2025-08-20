@@ -30,10 +30,9 @@ export const AnimatedTable = () => {
   const handleApproval = async (e, id) => {
     e.stopPropagation();
     setApproving(true);
-    const res = await approveReview(id);
+    await approveReview(id);
     setApproving(false);
     getReviews();
-    console.log(res);
   };
 
   const getReviews = async () => {
