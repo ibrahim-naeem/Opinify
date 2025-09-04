@@ -7,11 +7,6 @@
   --color-secondaryButton: #425feb;
 }
 
-/* heading: "#390CA0",
-  text: "#3E36C7",
-  background: "#EBF2FA",
-  secondaryButton: "#425FEB", */
-
 :root {
   font-family: "Comfortaa", Inter, system-ui, Avenir, Helvetica, Arial,
     sans-serif;
@@ -21,4 +16,8 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: ;
 }
+
+/* #feedcf; */
+/* #fefcf2 */

@@ -3,16 +3,17 @@ import {
   createBrowserRouter,
   Navigate,
   RouterProvider,
-  useNavigate,
 } from "react-router-dom";
 import { Bounce, ToastContainer } from "react-toastify";
 
 import { useMainConext } from "./hooks/useMainContext.js";
 import { supabase } from "./database/supabase.js";
 
+import Home from "./Pages/Home.jsx";
 import Email from "./Pages/Email.jsx";
 import MyReviews from "./Pages/myReview.jsx";
 import Review from "./Pages/Review.jsx";
+import About from "./Pages/About.jsx";
 
 import MainLayout from "./Components/MainLayout.jsx";
 import ReviewDetailView from "./Components/ReviewDetailView.jsx";
@@ -29,6 +30,10 @@ const router = createBrowserRouter(
           element: <Email />,
         },
         {
+          path: "home",
+          element: <Home />,
+        },
+        {
           path: "review",
           element: <Review />,
         },
@@ -43,6 +48,10 @@ const router = createBrowserRouter(
         {
           path: "recentReviews",
           element: <AnimatedTable />,
+        },
+        {
+          path: "about",
+          element: <About />,
         },
         {
           path: "*",
@@ -88,6 +97,7 @@ function App() {
         data: { session },
         error,
       } = await supabase.auth.getSession();
+      console.log(session, error);
       if (error) {
         console.error("Error fetching session:", error.message);
         return;

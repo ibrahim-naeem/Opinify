@@ -5,6 +5,10 @@ import { LuMenu, LuX } from "react-icons/lu";
 import { supabase } from "../database/supabase";
 import { useMainConext } from "../hooks/useMainContext";
 
+import { Player } from "@lottiefiles/react-lottie-player";
+import Divider from "../assets/divider.json";
+import WhiteDivider from "../assets/whiteDivider.json";
+
 function Header() {
   const navigate = useNavigate();
   const [showNav, setShowNav] = useState(false);
@@ -38,7 +42,7 @@ function Header() {
           className={`text-4xl font-extrabold font-comfortaa text-heading`}
           onClick={() => {
             setFilter("");
-            navigate("/review");
+            navigate("/home");
           }}
         >
           Scamsnoop
@@ -64,15 +68,28 @@ function Header() {
                   <Link to="/recentReviews">Recent reviews</Link>
                 </li>
               )}
+              <li className="relative text-sm hover:text-xl duration-300 ease-in-out not-last:">
+                <Link to="/reviews">Add Review</Link>
+                <Player
+                  autoplay
+                  loop
+                  src={Divider}
+                  className="absolute w-[80px] h-5 "
+                />
+              </li>
               <li className="text-sm hover:text-xl duration-300 ease-in-out">
                 <Link to="/myReviews">My reviews</Link>
               </li>
               <li className="text-sm hover:text-xl duration-300 ease-in-out">
                 Services
               </li>
-              <li className="text-sm hover:text-xl duration-300 ease-in-out">
+              <li
+                onClick={() => navigate("/about")}
+                className="text-sm hover:text-xl duration-300 ease-in-out"
+              >
                 About us
               </li>
+              s
               {session && (
                 <button
                   onClick={signOut}
@@ -95,11 +112,25 @@ function Header() {
                 <Link to="/recentReviews">Recent reviews</Link>
               </li>
             )}
+            <li className="relative text-center border-b py-3 mx-auto">
+              <Link to="/reviews">Add Review</Link>
+              <Player
+                autoplay
+                loop
+                src={WhiteDivider}
+                className="absolute top-8 left-[160px] w-[80px] h-5 "
+              />
+            </li>
             <li className="text-center border-b py-3">
               <Link to="/myReviews">My reviews</Link>
             </li>
             <li className="text-center border-b py-3">Services</li>
-            <li className="text-center border-b b py-3 ">About us</li>
+            <li
+              className="text-center border-b b py-3 "
+              onClick={() => navigate("/about")}
+            >
+              About us
+            </li>
             {session && (
               <li onClick={signOut} className="text-center  py-3 ">
                 {loading ? "Signing out..." : "Sign out"}

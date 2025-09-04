@@ -24,7 +24,8 @@
     "react-router": "^6.30.0",
     "react-router-dom": "^6.30.0",
     "react-toastify": "^11.0.5",
-    "supabase": "^2.34.3"
+    "supabase": "^2.34.3",
+    "swiper": "^11.2.10"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
