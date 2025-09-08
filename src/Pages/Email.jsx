@@ -20,8 +20,8 @@ function EmailSection() {
       email,
       options: {
         shouldCreateUser: true,
-        emailRedirectTo: "https://opinify.vercel.app/review",
-      }, // "http://localhost:5174/review",
+        emailRedirectTo: "http://localhost:5174/", //"https://opinify.vercel.app/review",
+      },
     });
     toast.success("Check your email for the magic link!");
     setLoading(true);
@@ -39,7 +39,7 @@ function EmailSection() {
   };
 
   useEffect(() => {
-    session && navigate("/review");
+    session && navigate("/home");
   }, [session, navigate, email]);
 
   if (loading) {

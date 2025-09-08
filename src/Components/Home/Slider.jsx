@@ -8,29 +8,39 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 
+import bg1 from "../../assets/bg-1.png";
+import bg2 from "../../assets/bg-2.png";
+import bg3 from "../../assets/bg-3.jpeg";
+import bg4 from "../../assets/bg-4.jpeg";
+
 export default function Slider() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const slides = [
     {
-      img: "https://picsum.photos/id/1015/1600/900",
+      img: bg1,
       heading: "Discover Nature",
       text: "Experience the beauty of untouched landscapes.",
     },
     {
-      img: "https://picsum.photos/id/1018/1600/900",
+      img: bg2,
       heading: "Adventure Awaits",
       text: "Step into the wild and embrace the unknown paths.",
     },
     {
-      img: "https://picsum.photos/id/1020/1600/900",
-      heading: "Peaceful Escape",
-      text: "Find serenity in quiet corners of the world.",
+      img: bg3,
+      heading: "Adventure Awaits",
+      text: "Step into the wild and embrace the unknown paths.",
+    },
+    {
+      img: bg4,
+      heading: "Adventure Awaits",
+      text: "Step into the wild and embrace the unknown paths.",
     },
   ];
 
   return (
-    <div className="w-full">
+    <div className="w-[100vw] overflow-hidden  mt-[80px]">
       <Swiper
         modules={[Navigation, Pagination, Autoplay, EffectFade]}
         slidesPerView={1}
@@ -40,21 +50,21 @@ export default function Slider() {
         autoplay={{ delay: 2500, disableOnInteraction: false }}
         effect="fade"
         speed={1000}
-        className="h-[91vh]"
+        className="h-[84vh] md:h-[91vh]"
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
       >
         {slides.map((slide, i) => (
           <SwiperSlide key={i}>
             <div
-              className="h-full bg-cover bg-center relative"
+              className="h-[100vh] bg-center bg-[length:550px_950px] md:bg-[length:100%_100%] lg:bg-[length:90%_100%] xl:bg-[length:80%_100%] bg-no-repeat "
               style={{ backgroundImage: `url(${slide.img})` }}
             >
               {/* Dark overlay */}
-              <div className="absolute inset-0 bg-black/50"></div>
+              {/* <div className="absolute inset-0 bg-black/50"></div> */}
 
               {/* Text */}
               <div className="relative z-5 h-full flex flex-col justify-center items-start px-6 sm:px-12">
-                <motion.h2
+                {/* <motion.h2
                   initial={{ x: -100, opacity: 0 }}
                   animate={
                     activeIndex === i
@@ -78,7 +88,7 @@ export default function Slider() {
                   className="ml-4 sm:ml-12 max-w-md text-sm sm:text-base lg:text-lg text-white"
                 >
                   {slide.text}
-                </motion.p>
+                </motion.p> */}
               </div>
             </div>
           </SwiperSlide>
@@ -101,11 +111,11 @@ export default function Slider() {
 
         /* White pagination bullets */
         .swiper-pagination-bullet {
-          background: white !important;
+          background: #3e36c7 !important;
           opacity: 0.6;
         }
         .swiper-pagination-bullet-active {
-          background: white !important;
+          background: #3e36c7 !important;
           opacity: 1;
         }
       `}</style>

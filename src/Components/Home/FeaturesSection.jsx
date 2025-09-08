@@ -1,30 +1,33 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
 import { useMainConext } from "../../hooks/useMainContext";
+import InstaCard from "../../assets/insta-card1.png";
+import Tiktok from "../../assets/tiktok-card.png";
+import Facebook from "../../assets/facebook-card.png";
 
 const data = [
   {
     id: 1,
     title: "Instagram Scams",
     description:
-      "A short description about this product highlighting its features and benefits for customers.",
-    image: "https://picsum.photos/400/300?random=1",
+      "Here you can see common Instagram scams. Stay alert before clicking any link.",
+    image: InstaCard,
     filter: "Instagram",
   },
   {
     id: 2,
     title: "Facebook Scams",
     description:
-      "A short description about this product highlighting its features and benefits for customers.",
-    image: "https://picsum.photos/400/300?random=2",
+      "Here you can spot Facebook scam patterns. Think twice before you share or pay. ",
+    image: Facebook,
     filter: "Facebook",
   },
   {
     id: 3,
     title: "Tiktok Scams",
     description:
-      "A short description about this product highlighting its features and benefits for customers.",
-    image: "https://picsum.photos/400/300?random=3",
+      "Here are TikTok scam tricks to watch out for. Don’t trust every viral offer.",
+    image: Tiktok,
     filter: "Tiktok",
   },
 ];
@@ -38,8 +41,8 @@ const FeaturedSection = () => {
   };
 
   return (
-    <section className=" bg-white py-16">
-      <div className="max-w-7xl mx-auto px-4 text-center">
+    <section className="w-[100vw] overflow-hidden  bg-white py-16">
+      <div className="max-w-7xl  mx-auto px-4 text-center">
         {/* Heading */}
         <motion.h2
           variants={fadeUp}

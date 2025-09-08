@@ -8,7 +8,7 @@ export default function ParallaxGlassSection() {
 
   return (
     <section
-      className="relative h-[100vh] flex items-center justify-center bg-fixed bg-center bg-cover"
+      className="w-[100vw] overflow-hidden relative h-[100vh] flex items-center justify-center bg-fixed bg-center bg-cover"
       style={{
         backgroundImage:
           "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')",

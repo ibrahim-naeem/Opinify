@@ -17,7 +17,7 @@ function About() {
         communicate online without fear of being defrauded. We are a dedicated
         team of activists, researchers, and digital citizens who have witnessed
         the devastating impact of scams firsthand. Our platform was born from a
-        simple idea{" "}
+        simple idea
         <span className="font-bold text-lg">
           `what if we could fight back together?`
         </span>

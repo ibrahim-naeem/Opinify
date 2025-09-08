@@ -2,20 +2,23 @@ import { motion } from "framer-motion";
 
 export default function Footer() {
   return (
-    <footer className="bg-heading text-white py-12 px-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+    <footer className="w-[100vw] overflow-hidden bg-heading text-white py-12 px-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {/* Logo */}
         <motion.div
           initial={{ x: -100, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="flex flex-col items-start"
+          className=" flex flex-col text-center " //items-center sm:items-start
         >
-          <h1 className="text-2xl font-bold mb-4">MyStore</h1>
-          <p className="text-sm text-white">
-            Bringing you the best products with premium quality and customer
-            satisfaction in mind.
+          <h1 className="text-xl font-bold mb-4">Scamsnoop</h1>
+          <p className=" text-white  ">
+            Our platform is based on community submissions, every report will be
+            carefully verified by our team before being published. We encourage
+            users to upload only authentic reviews, provide genuine evidence,
+            and fully cooperate so that together we can build a reliable and
+            trustworthy database.
           </p>
         </motion.div>
 
@@ -25,46 +28,21 @@ export default function Footer() {
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
+          className="text-center "
         >
-          <h2 className="text-lg font-semibold mb-4">Shop</h2>
-          <ul className="space-y-2 text-white">
-            <li>
-              <a href="#">New Arrivals</a>
-            </li>
-            <li>
-              <a href="#">Best Sellers</a>
-            </li>
-            <li>
-              <a href="#">Discounts</a>
-            </li>
-            <li>
-              <a href="#">Categories</a>
-            </li>
-          </ul>
-        </motion.div>
-
-        {/* Nav Links 2 */}
-        <motion.div
-          initial={{ y: 50, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-lg font-semibold mb-4">Support</h2>
-          <ul className="space-y-2 text-white">
-            <li>
-              <a href="#">Contact Us</a>
-            </li>
-            <li>
-              <a href="#">FAQs</a>
-            </li>
-            <li>
-              <a href="#">Shipping & Returns</a>
-            </li>
-            <li>
-              <a href="#">Privacy Policy</a>
-            </li>
-          </ul>
+          <h2 className="text-xl font-semibold mb-4">Join the Fight</h2>
+          The battle against scammers cannot be won alone. It requires all of
+          us.<span className="font-bold "> Search our database </span>
+          before you send money or share details.
+          <span className="font-bold "> Report a scammer </span>
+          to protect your community.
+          <span className="font-bold "> Share your knowledge </span> and help
+          others stay safe.
+          <p>
+            Together, we can drag these criminals into the light and take away
+            their power.
+          </p>
+          <p className=" font-extrabold py-5">" The scamsnoop Team "</p>
         </motion.div>
 
         {/* Subscribe */}
@@ -73,7 +51,7 @@ export default function Footer() {
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
           viewport={{ once: true }}
-          className="flex flex-col"
+          className="flex flex-col items-center  "
         >
           <h2 className="text-lg font-semibold mb-4">Subscribe</h2>
           <p className="text-sm text-white mb-3">

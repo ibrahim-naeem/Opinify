@@ -4,7 +4,7 @@ import { MainContext } from "../Context/MainContext";
 // eslint-disable-next-line react/prop-types
 export const MainContextProvider = ({ children }) => {
   const [session, setSession] = useState(null);
-  const [toggle, setToggle] = useState("recent"); // recent - add
+  const [toggle, setToggle] = useState("add"); // recent - add
 
   // search
   const [searchQuery, setSearchQuery] = useState("");

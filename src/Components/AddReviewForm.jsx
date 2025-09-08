@@ -143,8 +143,8 @@ function AddReviewForm() {
       <p>Please add the details of the business you want to report.</p>
 
       {[
-        { type: "text", name: "name", placeholder: "Name" },
-        { type: "email", name: "email", placeholder: "Email" },
+        { type: "text", name: "name", placeholder: "Page Name" },
+        { type: "email", name: "email", placeholder: "Page Email" },
         { type: "tel", name: "phoneNumber", placeholder: "Phone Number" },
       ].map(({ type, name, placeholder }) => (
         <motion.input
