@@ -5,7 +5,7 @@ function Toggle() {
   return (
     <button
       type="button"
-      className=" bg-heading rounded-4xl w-[80vw] sm:w-[45vw] lg:w-[35vw] relative py-4"
+      className="mt-20 bg-heading rounded-4xl w-[80vw] sm:w-[45vw] lg:w-[35vw] relative py-4"
     >
       <motion.span
         initial={{ x: 0 }}
