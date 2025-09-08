@@ -20,8 +20,8 @@ function EmailSection() {
       email,
       options: {
         shouldCreateUser: true,
-        emailRedirectTo: "http://localhost:5174/", //"https://opinify.vercel.app/review",
-      },
+        emailRedirectTo: "https://opinify.vercel.app/review",
+      }, //"http://localhost:5174/"
     });
     toast.success("Check your email for the magic link!");
     setLoading(true);
