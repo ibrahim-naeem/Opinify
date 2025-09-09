@@ -21,6 +21,7 @@ function Header() {
     localStorage.getItem("isAuthenticated") === "authenticated";
 
   const signOut = async () => {
+    setShowNav(false);
     localStorage.removeItem("isAuthenticated");
     setLoading(true);
     const { error } = await supabase.auth.signOut();
@@ -56,17 +57,18 @@ function Header() {
           Scamsnoop
         </h1>
 
-        {showNav ? (
-          <LuX
-            className="sm:hidden w-7 h-7 text-heading"
-            onClick={() => setShowNav(!showNav)}
-          />
-        ) : (
-          <LuMenu
-            className="sm:hidden w-7 h-7 text-heading"
-            onClick={() => setShowNav(!showNav)}
-          />
-        )}
+        {session &&
+          (showNav ? (
+            <LuX
+              className="sm:hidden w-7 h-7 text-heading"
+              onClick={() => setShowNav(!showNav)}
+            />
+          ) : (
+            <LuMenu
+              className="sm:hidden w-7 h-7 text-heading"
+              onClick={() => setShowNav(!showNav)}
+            />
+          ))}
 
         <ul className="hidden sm:flex w-[45vw] xl:w-[35vw] justify-around items-center text-base md:text-lg xl:text-xl text-heading font-semibold transition duration-700 ease-in-out">
           {isAuthenticated && (

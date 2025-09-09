@@ -76,7 +76,7 @@ function ReviewDetailView() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className=" w-[90vw] mx-auto my-10 flex flex-col items-center
+      className=" mt-[100px] w-[85vw] mx-auto my-10 flex flex-col items-center
     gap-4 rounded-2xl"
     >
       <div className="flex justify-between border-2 rounded-full bg-heading text-white w-[90vw] p-6 sm:px-20 lg:px-30 text-sm sm:text-xl font-bold">

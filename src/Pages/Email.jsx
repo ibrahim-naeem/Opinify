@@ -20,8 +20,8 @@ function EmailSection() {
       email,
       options: {
         shouldCreateUser: true,
-        emailRedirectTo: "https://opinify.vercel.app/review",
-      }, //"http://localhost:5174/"
+        RedirectTo: "https://opinify.vercel.app", // "http://localhost:5174"
+      },
     });
     toast.success("Check your email for the magic link!");
     setLoading(true);
@@ -54,7 +54,7 @@ function EmailSection() {
   }
 
   return (
-    <div className="lg:flex justify-between items-center overflow-hidden lg:h-[80vh]">
+    <div className="mt-[80px] lg:flex justify-between items-center overflow-hidden lg:h-[80vh]">
       <div className="lg:w-[50vw] xl:w-[55vw]">
         <img src={EmailVectorImage} alt="hero email vector image" />
       </div>
@@ -63,9 +63,10 @@ function EmailSection() {
           <h1 className="text-xl md:text-2xl xl:text-3xl font-extrabold my-3 text-heading">
             Here we Exposed Scammers
           </h1>
-          <p className="text-sm md:text-base">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-            non labore tenetur earum quisquam obcaecati.
+          <p className="text-sm md:text-base text-heading">
+            Welcome to SCAMSNOOP , your trusted resource in the fight against
+            online fraud. We provide a vital service for individuals and
+            businesses to proactively protect themselves from financial scams
           </p>
         </div>
         {/* Email form  */}
@@ -74,7 +75,7 @@ function EmailSection() {
           onSubmit={(e) => handleSubmit(e)}
         >
           <input
-            className="border rounded-xl border-gray-700 w-[350px] md:w-[450px] lg:w-[400px] xl:w-[500px] p-4"
+            className="border border-heading text-heading rounded-xl w-[350px] md:w-[450px] lg:w-[400px] xl:w-[500px] p-4 outline-none focus:outline-none"
             type="emai"
             name="email"
             placeholder="Enter your email here..."
