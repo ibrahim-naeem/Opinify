@@ -20,7 +20,7 @@ function EmailSection() {
       email,
       options: {
         shouldCreateUser: true,
-        RedirectTo: "https://opinify.vercel.app", // "http://localhost:5174"
+        RedirectTo: "https://www.scamsnoop.com/",
       },
     });
     toast.success("Check your email for the magic link!");
