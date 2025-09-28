@@ -8,34 +8,16 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 
-import bg1 from "../../assets/bg-1.png";
-import bg2 from "../../assets/bg-2.png";
-import bg3 from "../../assets/bg-3.jpeg";
-import bg4 from "../../assets/bg-4.jpeg";
+import banner1LG from "../../assets/final-1.jpeg";
+import banner1SM from "../../assets/final-2.jpeg";
 
 export default function Slider() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const slides = [
     {
-      img: bg1,
-      heading: "Discover Nature",
-      text: "Experience the beauty of untouched landscapes.",
-    },
-    {
-      img: bg2,
-      heading: "Adventure Awaits",
-      text: "Step into the wild and embrace the unknown paths.",
-    },
-    {
-      img: bg3,
-      heading: "Adventure Awaits",
-      text: "Step into the wild and embrace the unknown paths.",
-    },
-    {
-      img: bg4,
-      heading: "Adventure Awaits",
-      text: "Step into the wild and embrace the unknown paths.",
+      desktop: banner1LG,
+      mobile: banner1SM,
     },
   ];
 
@@ -50,51 +32,28 @@ export default function Slider() {
         autoplay={{ delay: 2500, disableOnInteraction: false }}
         effect="fade"
         speed={1000}
-        className="h-[84vh] md:h-[91vh]"
+        className="h-[90vh]"
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
       >
         {slides.map((slide, i) => (
           <SwiperSlide key={i}>
-            <div
-              className="h-[100vh] bg-center bg-[length:550px_950px] md:bg-[length:100%_100%] lg:bg-[length:90%_100%] xl:bg-[length:80%_100%] bg-no-repeat "
-              style={{ backgroundImage: `url(${slide.img})` }}
-            >
-              {/* Dark overlay */}
-              {/* <div className="absolute inset-0 bg-black/50"></div> */}
-
-              {/* Text */}
-              <div className="relative z-5 h-full flex flex-col justify-center items-start px-6 sm:px-12">
-                {/* <motion.h2
-                  initial={{ x: -100, opacity: 0 }}
-                  animate={
-                    activeIndex === i
-                      ? { x: 0, opacity: 1 }
-                      : { x: -100, opacity: 0 }
-                  }
-                  transition={{ duration: 0.8 }}
-                  className="ml-4 sm:ml-12 text-2xl sm:text-4xl lg:text-5xl font-bold mb-4 text-white"
-                >
-                  {slide.heading}
-                </motion.h2>
-
-                <motion.p
-                  initial={{ x: -100, opacity: 0 }}
-                  animate={
-                    activeIndex === i
-                      ? { x: 0, opacity: 1 }
-                      : { x: -100, opacity: 0 }
-                  }
-                  transition={{ duration: 1, delay: 0.3 }}
-                  className="ml-4 sm:ml-12 max-w-md text-sm sm:text-base lg:text-lg text-white"
-                >
-                  {slide.text}
-                </motion.p> */}
-              </div>
+            <div className="relative h-full w-full">
+              <picture>
+                {/* Desktop (≥1024px) */}
+                <source media="(min-width: 1024px)" srcSet={slide.desktop} />
+                {/* Tablet (≥768px) */}
+                <source media="(min-width: 768px)" srcSet={slide.tablet} />
+                {/* Mobile (<768px) fallback */}
+                <img
+                  src={slide.mobile}
+                  alt={`Slide ${i}`}
+                  className="h-full w-full "
+                />
+              </picture>
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
-
       {/* Custom styles */}
       <style jsx global>{`
         /* White arrows (hidden on small devices) */

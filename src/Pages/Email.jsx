@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { toast } from "react-toastify";
-
+import { motion } from "framer-motion";
 import { supabase } from "../database/supabase";
 import EmailVectorImage from "../assets/email-vector.jpg";
 import Animation from "../assets/loading-animation.json";
@@ -82,12 +82,13 @@ function EmailSection() {
             required
             onChange={(e) => setEmail(e.target.value)}
           />
-          <button
+          <motion.button
+            whileTap={{ scale: 0.9 }}
             type="submit"
             className="w-[350px] md:w-[450px] lg:w-[400px] xl:w-[500px] border rounded-4xl my-5 p-3 bg-heading text-white"
           >
             Submit Your Email
-          </button>
+          </motion.button>
         </form>
       </section>
     </div>
